@@ -5,6 +5,7 @@ import axios from 'axios';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,21 +15,33 @@ class App extends React.Component {
 
   }
 
-  update(data) {
-    data.forEach(repo => {
-      this.setState({
-        repos.push(data)
-      });
+  componentDidMount() {
+    return axios.get('/repos')
+      .then(result => {
+      this.update(result.data);
     });
+  }
+
+  update(data) {
+    this.setState({
+      repos: data
+    });
+
   }
 
   search (term) {
     console.log(`${term} was searched`);
     var data = {username: term};
-    axios.post('/repos', data);
+    return axios.post('/repos', data)
+    .then(result => {
+      // console.log(result.data);
+      this.update(result.data);
+    })
+    .catch(err => console.log('there is a duplicate'));
   }
 
   render () {
+    console.log("change");
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>

@@ -13,18 +13,25 @@ app.post('/repos', function (req, res) {
     .then(data => {
       // console.log(data.data);
       save(data.data);
+      getTop25()
+      .then(data => {
+        // console.log(data);
+        res.send(data);
+      })
     })
+    .catch(err => {console.log(err)});
 
 });
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  getTop25().
-  then(data => {
-    console.log(data);
-    res.send('success');
+  getTop25()
+  .then(data => {
+    // console.log(data);
+    res.send(data);
   })
+  .catch(err => {console.log(err)});
 
 });
 

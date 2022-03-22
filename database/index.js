@@ -21,7 +21,7 @@ let save = (data => {
     repo = new Repo({ username, repo_name, repo_id, git_url, forks });
     repo.save(err => {
       if (err) {
-        return handleError(err);
+        console.log(err);
       }
     });
   });
@@ -30,7 +30,7 @@ let save = (data => {
 let getTop25 = async function () {
   try {
     const repos = await Repo.find().sort({ forks: -1}).limit(25);
-    // console.log (repos);
+    // console.log('repo are ', repos);
     return repos;
   } catch (e) {
     console.log(e.message);
