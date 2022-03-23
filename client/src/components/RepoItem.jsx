@@ -5,7 +5,7 @@ const RepoItem = (props) => {
   return (
     <li>
       username is {props.repo.username} and link to repo is
-      <a href={props.repo.git_url}> link to repo</a>
+      <a href={props.repo.git_url}> {props.repo.repo_name}</a>
     </li>
   )
 }

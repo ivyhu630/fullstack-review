@@ -2,7 +2,7 @@ import React from 'react';
 import RepoItem from './RepoItem.jsx';
 
 const RepoList = (props) => {
-  console.log('in report list', props.repos);
+  // console.log('in report list', props.repos);
   return (
   <div>
     <h4> Repo List Component </h4>

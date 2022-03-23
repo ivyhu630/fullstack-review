@@ -12,7 +12,6 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
-
   }
 
   componentDidMount() {
@@ -26,7 +25,22 @@ class App extends React.Component {
     this.setState({
       repos: data
     });
+  }
 
+  countUpdate(old, newd){
+    var ct = 0;
+    var oldIDs = [];
+    var newIDs = [];
+    old.forEach(e=> {
+      oldIDs.push(e.repo_id);
+    })
+    newd.forEach(e=> {
+      newIDs.push(e.repo_id);
+    })
+
+    let intersection = oldIDs.filter(x => newIDs.includes(x));
+    ct = newd.length - intersection.length;
+    return ct;
   }
 
   search (term) {
@@ -34,8 +48,9 @@ class App extends React.Component {
     var data = {username: term};
     return axios.post('/repos', data)
     .then(result => {
-      // console.log(result.data);
-      this.update(result.data);
+      var updateNum = this.countUpdate(this.state.repos, result.data.data);
+      this.update(result.data.data);
+      window.alert(`${result.data.count}  new repos imported, ${updateNum} repos updated`);
     })
     .catch(err => console.log('there is a duplicate'));
   }
